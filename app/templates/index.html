@@ -11,6 +11,7 @@
 </head>
 <body>
     <h1>Catálogo de Produtos</h1>
+    <p><a href="{{ url_for('add_product') }}">Adicionar Novo Produto</a></p>
 
     {% if products %}
         {% for product in products %}
