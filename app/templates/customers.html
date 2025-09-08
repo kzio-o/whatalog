@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} - Whatalog</title>
+    </head>
+<body>
+    <h1>Lista de Clientes</h1>
+    <p><a href="{{ url_for('main.add_customer') }}">Adicionar Novo Cliente</a></p>
+    <hr>
+    <p><a href="{{ url_for('main.index') }}">Ver Produtos</a></p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% for customer in customers %}
+        <div>
+            <h2>{{ customer.name }}</h2>
+            <p>Tipo: {{ customer.customer_type or 'Não especificado' }}</p>
+            <p>Telefone: {{ customer.phone or 'Não informado' }}</p>
+            <p>Email: {{ customer.email or 'Não informado' }}</p>
+            <a href="{{ url_for('main.edit_customer', customer_id=customer.id) }}">Editar</a>
+            <form action="{{ url_for('main.delete_customer', customer_id=customer.id) }}" method="post" style="display:inline;">
+                <input type="submit" value="Excluir" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">
+            </form>
+        </div>
+        <hr>
+    {% else %}
+        <p>Nenhum cliente cadastrado ainda.</p>
+    {% endfor %}
+</body>
+</html>
